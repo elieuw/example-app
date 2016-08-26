@@ -27,6 +27,17 @@ module.exports = {
     modulesDirectories: ['node_modules']
   },
   module: {
+    preLoaders: [
+      {
+        test: /.js$/,
+        loader: 'string-replace-loader',
+        query: {
+          search: 'moduleId: module.id,',
+          replace: '',
+          flags: 'g'
+        }
+      }
+    ],
     loaders: [
       {
         test: /\.ts$/,
