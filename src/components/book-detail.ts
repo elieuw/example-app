@@ -1,10 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Book } from '../models/book';
 
-import { Book } from '../models';
-import { AddCommasPipe } from '../pipes/add-commas';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
-import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
-import { MdButton } from '@angular2-material/button';
 
 /**
  * Tip: Export type aliases for your component's inputs and outputs. Until we
@@ -18,8 +14,6 @@ export type RemoveOutput = Book;
 
 @Component({
   selector: 'book-detail',
-  pipes: [ AddCommasPipe ],
-  directives: [ MD_CARD_DIRECTIVES, MD_LIST_DIRECTIVES, MdButton ],
   template: `
     <md-card>
       <md-card-title-group>

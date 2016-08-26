@@ -70,7 +70,7 @@ export interface AppState {
  * wrapping that in storeLogger. Remember that compose applies
  * the result from right to left.
  */
-export default compose(storeFreeze, storeLogger(), combineReducers)({
+export const rootReducer = compose(storeFreeze, storeLogger(), combineReducers)({
   search: searchReducer,
   books: booksReducer,
   collection: collectionReducer

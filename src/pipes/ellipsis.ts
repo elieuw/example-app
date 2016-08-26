@@ -1,8 +1,7 @@
 import { Pipe } from '@angular/core';
 
-@Pipe({
-  name: 'ellipsis'
-})
+
+@Pipe({ name: 'ellipsis' })
 export class EllipsisPipe {
   transform(str) {
     const withoutHtml = str.replace(/(<([^>]+)>)/ig);

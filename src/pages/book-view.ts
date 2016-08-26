@@ -8,18 +8,11 @@ import { Observable } from 'rxjs/Observable';
 
 import { AppState, getBook, isBookInCollection } from '../reducers';
 import { BookActions } from '../actions/book';
-import {
-  BookDetailComponent,
-  BookInput,
-  InCollectionInput,
-  AddOutput,
-  RemoveOutput
-} from '../components/book-detail';
+import { BookInput, InCollectionInput, AddOutput, RemoveOutput } from '../components/book-detail';
 
 
 @Component({
   selector: 'book-view-page',
-  directives: [ BookDetailComponent ],
   template: `
     <book-detail
       [book]="book$ | async"

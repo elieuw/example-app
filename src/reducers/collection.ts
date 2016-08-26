@@ -2,9 +2,8 @@ import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/map';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-
 import { BookActions } from '../actions/book';
-import { Book } from '../models';
+import { Book } from '../models/book';
 
 
 export interface CollectionState {

@@ -1,6 +1,7 @@
 import { Type } from '@angular/core/src/facade/lang';
 import { Injectable, ComponentFactory, ComponentResolver } from '@angular/core';
 
+
 class LoaderCallback {
   constructor(private callback) {}
 }

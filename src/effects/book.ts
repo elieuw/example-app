@@ -8,20 +8,20 @@ import 'rxjs/add/operator/switchMapTo';
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
-import { Effect, StateUpdates, toPayload } from '@ngrx/effects';
+import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Database } from '@ngrx/db';
 
 import { AppState } from '../reducers';
 import { GoogleBooksService } from '../services/google-books';
 import { BookActions } from '../actions/book';
-import { Book } from '../models';
+import { Book } from '../models/book';
 
 
 @Injectable()
 export class BookEffects {
   constructor(
-    private updates$: StateUpdates<AppState>,
+    private actions$: Actions,
     private googleBooks: GoogleBooksService,
     private db: Database,
     private bookActions: BookActions
@@ -40,21 +40,21 @@ export class BookEffects {
  * Official Docs: http://reactivex.io/rxjs/manual/overview.html#categories-of-operators
  * RxJS 5 Operators By Example: https://gist.github.com/btroncone/d6cf141d6f2c00dc6b35
  */
-  @Effect() openDB$ = this.db.open('books_app').filter(() => false);
+  @Effect({ dispatch: false }) openDB$ = this.db.open('books_app');
 
 
   @Effect() loadCollectionOnInit$ = Observable.of(this.bookActions.loadCollection());
 
 
-  @Effect() loadCollection$ = this.updates$
-    .whenAction(BookActions.LOAD_COLLECTION)
+  @Effect() loadCollection$ = this.actions$
+    .ofType(BookActions.LOAD_COLLECTION)
     .switchMapTo(this.db.query('books').toArray())
     .map((books: Book[]) => this.bookActions.loadCollectionSuccess(books));
 
 
-  @Effect() search$ = this.updates$
-    .whenAction(BookActions.SEARCH)
-    .map<string>(toPayload)
+  @Effect() search$ = this.actions$
+    .ofType(BookActions.SEARCH)
+    .map<string>(action => action.payload)
     .filter(query => query !== '')
     .switchMap(query => this.googleBooks.searchBooks(query)
       .map(books => this.bookActions.searchComplete(books))
@@ -62,16 +62,16 @@ export class BookEffects {
     );
 
 
-  @Effect() clearSearch$ = this.updates$
-    .whenAction(BookActions.SEARCH)
-    .map<string>(toPayload)
+  @Effect() clearSearch$ = this.actions$
+    .ofType(BookActions.SEARCH)
+    .map<string>(action => action.payload)
     .filter(query => query === '')
     .mapTo(this.bookActions.searchComplete([]));
 
 
-  @Effect() addBookToCollection$ = this.updates$
-    .whenAction(BookActions.ADD_TO_COLLECTION)
-    .map<Book>(toPayload)
+  @Effect() addBookToCollection$ = this.actions$
+    .ofType(BookActions.ADD_TO_COLLECTION)
+    .map<Book>(action => action.payload)
     .mergeMap(book => this.db.insert('books', [ book ])
       .mapTo(this.bookActions.addToCollectionSuccess(book))
       .catch(() => Observable.of(
@@ -80,9 +80,9 @@ export class BookEffects {
     );
 
 
-  @Effect() removeBookFromCollection$ = this.updates$
-    .whenAction(BookActions.REMOVE_FROM_COLLECTION)
-    .map<Book>(toPayload)
+  @Effect() removeBookFromCollection$ = this.actions$
+    .ofType(BookActions.REMOVE_FROM_COLLECTION)
+    .map<Book>(action => action.payload)
     .mergeMap(book => this.db.executeWrite('books', 'delete', [ book.id ])
       .mapTo(this.bookActions.removeFromCollectionSuccess(book))
       .catch(() => Observable.of(

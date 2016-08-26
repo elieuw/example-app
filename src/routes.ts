@@ -1,9 +1,9 @@
 import { RouterConfig } from '@angular/router';
 
-import { BookExistsGuard } from './guards';
+import { BookExistsGuard } from './guards/book-exists';
 import { load } from './services/async-component-resolver';
 
-const routes: RouterConfig = [
+export const routes: RouterConfig = [
   {
     path: '',
     component: load(() => new Promise(resolve => {
@@ -38,5 +38,3 @@ const routes: RouterConfig = [
     }))
   }
 ];
-
-export default routes;

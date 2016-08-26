@@ -5,19 +5,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { AppState, getSearchResults, getSearchQuery } from '../reducers';
-import { BookActions } from '../actions';
-import { BookSearchComponent, QueryInput, SearchOutput } from '../components/book-search';
-import { BookPreviewListComponent, BooksInput } from '../components/book-preview-list';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
+import { BookActions } from '../actions/book';
+import { QueryInput, SearchOutput } from '../components/book-search';
+import { BooksInput } from '../components/book-preview-list';
 
 
 @Component({
   selector: 'book-find-page',
-  directives: [
-    BookSearchComponent,
-    BookPreviewListComponent,
-    MD_CARD_DIRECTIVES
-  ],
   template: `
     <md-card>
       <md-card-title>Find a Book</md-card-title>

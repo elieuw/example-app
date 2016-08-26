@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Book } from '../models';
+import { Book } from '../models/book';
 
 
 /**

@@ -1,21 +1,11 @@
 import { Component, Input } from '@angular/core';
-
-import { Book } from '../models';
-import { AddCommasPipe } from '../pipes/add-commas';
-import { EllipsisPipe } from '../pipes/ellipsis';
-import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
-import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
+import { Book } from '../models/book';
 
 
 export type BookInput = Book;
 
 @Component({
   selector: 'book-preview',
-  pipes: [ AddCommasPipe, EllipsisPipe ],
-  directives: [
-    MD_CARD_DIRECTIVES,
-    MD_LIST_DIRECTIVES
-  ],
   template: `
     <a [routerLink]="['/book', id]">
       <md-card>

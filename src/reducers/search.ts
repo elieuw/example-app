@@ -1,8 +1,7 @@
 import '@ngrx/core/add/operator/select';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
-
-import { Book } from '../models';
+import { Book } from '../models/book';
 import { BookActions } from '../actions/book';
 
 

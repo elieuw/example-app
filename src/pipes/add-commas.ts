@@ -1,8 +1,7 @@
 import { Pipe } from '@angular/core';
 
-@Pipe({
-  name: 'addCommas'
-})
+
+@Pipe({ name: 'addCommas' })
 export class AddCommasPipe {
   transform(authors) {
     if(!authors) return '';
