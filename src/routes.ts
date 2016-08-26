@@ -1,40 +1,27 @@
-import { RouterConfig } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { BookExistsGuard } from './guards/book-exists';
-import { load } from './services/async-component-resolver';
+import { CollectionPage } from './pages/collection';
+import { BookFindPage } from './pages/book-find';
+import { BookViewPage } from './pages/book-view';
+import { NotFoundPage } from './pages/not-found';
 
-export const routes: RouterConfig = [
+export const routes: Routes = [
   {
     path: '',
-    component: load(() => new Promise(resolve => {
-      (require as any).ensure([], require => {
-        resolve(require('./pages/collection').CollectionPage);
-      });
-    }))
+    component: CollectionPage
   },
   {
     path: 'book/find',
-    component: load(() => new Promise(resolve => {
-      (require as any).ensure([], require => {
-        resolve(require('./pages/book-find').BookFindPage);
-      });
-    }))
+    component: BookFindPage
   },
   {
     path: 'book/:id',
     canActivate: [ BookExistsGuard ],
-    component: load(() => new Promise(resolve => {
-      (require as any).ensure([], require => {
-        resolve(require('./pages/book-view').BookViewPage);
-      });
-    }))
+    component: BookViewPage
   },
   {
     path: '**',
-    component: load(() => new Promise(resolve => {
-      (require as any).ensure([], require => {
-        resolve(require('./pages/not-found').NotFoundPage);
-      });
-    }))
+    component: NotFoundPage
   }
 ];
